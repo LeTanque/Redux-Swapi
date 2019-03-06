@@ -1,22 +1,31 @@
 import axios from 'axios';
-export const FETCH_CHAR_START = 'FETCH_CHAR';
-export const FETCH_CHAR_SUCCESS = 'FETCH_SUCCESS';
-export const FETCH_CHAR_FAILURE = 'FETCH_FAILURE';
+export const FETCH_CHAR_START = 'FETCH_CHAR_START';
+export const FETCH_CHAR_SUCCESS = 'FETCH_CHAR_SUCCESS';
+export const FETCH_CHAR_FAILURE = 'FETCH_CHAR_FAILURE';
 // we'll need axios
 
-export const getCharacter = () => dispatch => {
-    dispatch({ type: FETCH_CHAR_START });
+
+export const getCharacters = () => dispatch => {
+    dispatch({ 
+        type: FETCH_CHAR_START 
+    });
     axios
-        .get('https://swapi.co/api/people')
+        .get(
+            'https://swapi.co/api/people/'
+        )
         .then(response => {
-            console.log(response);
+            console.log('Action Response console:', response.data.results);
             dispatch({
                 type: FETCH_CHAR_SUCCESS,
-                payload: response.data
+                payload: response.data.results,
             })
         })
         .catch(error => {
-            console.log(error)
+            // console.log('Error console:', error);
+            dispatch({
+                type: FETCH_CHAR_FAILURE,
+                payload: error.message,
+            })
         })
 }
 

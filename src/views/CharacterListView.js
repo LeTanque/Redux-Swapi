@@ -1,38 +1,70 @@
-import React from "react";
+import React, {Fragment} from "react";
 import { connect } from "react-redux";
-import actions from '../actions';
-import Loader from 'react-loader-spinner';
+// import Loader from 'react-loader-spinner';
+
+import { getCharacters } from '../actions'; // import actions
 
 import { CharacterList } from "../components";
-// import actions
+
 
 class CharacterListView extends React.Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     characters:[]
+  //   }
+  // }
+  // state = {
+  //   characters:[],
+  //   fetching:''
+  // }
   constructor() {
     super();
   }
 
+
   componentDidMount() {
     // call our action
+    this.props.getCharacters();
+    // this.setState({
+    //   characters:this.props
+    // });
+    // console.log(this.state)
   }
 
   render() {
-    if (this.props.fetching) {
-      <Loader type='Ball-Triangle' color='#ff0000' height='30' weight='30' />
-      // return something here to indicate that you are fetching data
-    }
+    // if (this.props.fetching === true) { // return something here to indicate that you are fetching data
+    //   return (
+
+    //     <section className="loading-page">
+    //       <Loader type='Ball-Triangle' color='#ff0000' height='50%' weight='50%' />
+    //       <h3>Loading Characters</h3>
+    //     </section>
+
+    //   )
+      
+    // }
+    // console.log(this.state)
+    // console.log(this.props)
     return (
-      <div className="CharactersList_wrapper">
-        <CharacterList characters={this.props.characters} />
-      </div>
+      <Fragment>
+        <section className="character-list">
+          <CharacterList characters={this.props.characters} />
+        </section>
+      </Fragment>
     );
   }
 }
 
 // our mapStateToProps needs to have two properties inherited from state
 // the characters and the fetching boolean
+const mapStateToProps = state => ({
+  characters: state.charsReducer.characters,
+  fetching: state.charsReducer.fetching,
+  error: state.charsReducer.error
+})
+
 export default connect(
-  null /* mapStateToProps replaces null here */,
-  {
-    /* action creators go here */
-  }
+  mapStateToProps,
+  { getCharacters }
 )(CharacterListView);
