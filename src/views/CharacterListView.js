@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 import { connect } from "react-redux";
-// import Loader from 'react-loader-spinner';
+import Loader from 'react-loader-spinner';
 
 import { getCharacters } from '../actions'; // import actions
 
@@ -18,9 +18,9 @@ class CharacterListView extends React.Component {
   //   characters:[],
   //   fetching:''
   // }
-  constructor() {
-    super();
-  }
+  // constructor() {
+  //   super();
+  // }
 
 
   componentDidMount() {
@@ -33,17 +33,28 @@ class CharacterListView extends React.Component {
   }
 
   render() {
-    // if (this.props.fetching === true) { // return something here to indicate that you are fetching data
-    //   return (
+    if (this.props.fetching) { // return something here to indicate that you are fetching data
+      return (
 
-    //     <section className="loading-page">
-    //       <Loader type='Ball-Triangle' color='#ff0000' height='50%' weight='50%' />
-    //       <h3>Loading Characters</h3>
-    //     </section>
+        <section className="loading-page">
+          <Loader type='Ball-Triangle' color='#ff0000' height='50%' weight='50%' />
+          <h3>Loading Characters</h3>
+        </section>
 
-    //   )
+      )
       
-    // }
+    }
+    if (this.props.error) {
+      return (
+
+        <section className="loading-page">
+          <Loader type='Ball-Triangle' color='#ff0000' height='50%' weight='50%' />
+          <h3>Error Loading Characters</h3>
+          <code>{this.props.error}</code>
+        </section>
+
+      )
+    }
     // console.log(this.state)
     // console.log(this.props)
     return (
